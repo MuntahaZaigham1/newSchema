@@ -101,7 +101,7 @@ export class PostListComponent extends BaseListComponent<IPost> implements OnIni
 				label: 'writer',
 				sort: true,
 				filter: true,
-				type: ListColumnType.String
+				type: ListColumnType.Number
 	  		},
 		  	{
 				column: 'actions',

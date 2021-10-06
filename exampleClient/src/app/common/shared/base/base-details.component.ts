@@ -10,7 +10,6 @@ import { IAssociationEntry } from '../models/iassociationentry';
 
 import { ISearchField, operatorType } from '../components/list-filters/ISearchCriteria';
 import { IFCDialogConfig, PickerDialogService } from '../components/picker/picker-dialog.service';
-import { GlobalPermissionService } from 'src/app/core/services/global-permission.service';
 import { CanDeactivateGuard } from 'src/app/core/guards/can-deactivate.guard';
 import { ErrorService } from 'src/app/core/services/error.service';
 import { ServiceUtils } from '../utils/serviceUtils';
@@ -59,7 +58,6 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
   IsCreatePermission: Boolean = false;
   IsUpdatePermission: Boolean = false;
   IsDeletePermission: Boolean = false;
-  globalPermissionService: GlobalPermissionService;
 
   isMediumDeviceOrLess: boolean;
   mediumDeviceOrLessDialogSize: string = '100%';
@@ -81,22 +79,22 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
    * currently logged in user.
    */
   setPermissions = () => {
-    if (this.globalPermissionService) {
-      let entityName = this.entityName.startsWith('I') ? this.entityName.substr(1) : this.entityName;
-      this.IsCreatePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'CREATE');
-      if (this.IsCreatePermission) {
-        this.IsReadPermission = true;
-        this.IsDeletePermission = true;
-        this.IsUpdatePermission = true;
-      } else {
-        this.IsDeletePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'DELETE');
-        this.IsUpdatePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'UPDATE');
-        this.IsReadPermission =
-          this.IsDeletePermission || this.IsUpdatePermission
-            ? true
-            : this.globalPermissionService.hasPermissionOnEntity(entityName, 'READ');
-      }
-    }
+    // if (this.globalPermissionService) {
+    //   let entityName = this.entityName.startsWith('I') ? this.entityName.substr(1) : this.entityName;
+    //   this.IsCreatePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'CREATE');
+    //   if (this.IsCreatePermission) {
+    //     this.IsReadPermission = true;
+    //     this.IsDeletePermission = true;
+    //     this.IsUpdatePermission = true;
+    //   } else {
+    //     this.IsDeletePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'DELETE');
+    //     this.IsUpdatePermission = this.globalPermissionService.hasPermissionOnEntity(entityName, 'UPDATE');
+    //     this.IsReadPermission =
+    //       this.IsDeletePermission || this.IsUpdatePermission
+    //         ? true
+    //         : this.globalPermissionService.hasPermissionOnEntity(entityName, 'READ');
+    //   }
+    // }
   };
 
   ngOnInit() {
@@ -302,6 +300,7 @@ export class BaseDetailsComponent<E> implements OnInit, CanDeactivateGuard {
   onPickerClose(associatedItem, association: IAssociationEntry) {
     if (associatedItem) {
       association.column.forEach((col) => {
+        if(this.itemForm.get(col.key))
         this.itemForm.get(col.key).setValue(associatedItem[col.referencedkey]);
       });
       this.itemForm.get(association.descriptiveField).setValue(associatedItem[association.referencedDescriptiveField]);

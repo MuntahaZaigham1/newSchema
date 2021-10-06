@@ -93,6 +93,8 @@ export class PostNewComponent extends BaseNewComponent<IPost> implements OnInit 
 		});
 
 	}
+	// selectAssociation(association){
+	// }
 	
 	onSubmit() {
 		let post = this.itemForm.getRawValue();

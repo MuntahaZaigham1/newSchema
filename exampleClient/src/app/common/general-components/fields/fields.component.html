@@ -59,10 +59,10 @@
         </mat-error>
       </div>
       
-      <div *ngIf="field.type === 'numericArray' fxLayout="row wrap">
+      <div *ngIf="field.type === 'numericArray'" fxLayout="row wrap">
         <div fxFlex="100">
           <mat-label>{{field.label}}</mat-label>
-          <button class="add-button" mat-icon-button color="accent" (click)="addItem(field.name)">
+          <button class="add-button" mat-icon-button color="accent" (click)="addItem(field)">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -92,7 +92,7 @@
       <div *ngIf="field.type === 'Array' || field.type === 'array'">
         <div fxFlex="100">
           <mat-label>{{field.label}}</mat-label>
-          <button class="add-button" mat-icon-button color="accent" (click)="addItem(field.name,field.subType)">
+          <button class="add-button" mat-icon-button color="accent" (click)="addItem(field)">
             <mat-icon>add</mat-icon>
           </button>
         </div>

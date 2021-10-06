@@ -36,10 +36,8 @@
     "json-server": "^0.15.0",
     "moment": "^2.24.0",
     "ngx-material-timepicker": "^4.0.2"
-    
-                
-  }, 
-  "devDependencies": { 
+  },
+  "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.2",
     "@angular-eslint/builder": "1.2.0",
     "@angular-eslint/eslint-plugin": "1.2.0",
