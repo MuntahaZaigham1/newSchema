@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="Lenovo (generated)" failOnError="false" id="1633500467139-1">
+        <createTable tableName="post">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="post_pkey"/>
+            </column>
+            <column name="title" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="writer_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" failOnError="false" id="1633500467139-2">
+        <createTable tableName="writer">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="writer_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" failOnError="false" id="1633500467139-3">
+        <addUniqueConstraint columnNames="title" constraintName="post_title_key" tableName="post"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" failOnError="false" id="1633500467139-4">
+        <addUniqueConstraint columnNames="username" constraintName="writer_username_key" tableName="writer"/>
+    </changeSet>
+    <changeSet author="Lenovo (generated)" failOnError="false" id="1633500467139-5">
+        <addForeignKeyConstraint baseColumnNames="writer_id" baseTableName="post" constraintName="fk_writer" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="writer" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

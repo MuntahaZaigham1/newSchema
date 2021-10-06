@@ -1,0 +1,85 @@
+<mat-toolbar class="fc-tool-bar" color="primary" >
+  <figure class="logo">
+    <img src="../../../../assets/images/logo.png" alt="logo" />
+  </figure>
+  <button mat-icon-button class="menu-button" type="button" aria-label="Toggle sidenav" (click)="drawer.toggle()">
+    <i class="material-icons">menu</i>
+  </button>
+  <figure class="mob-logo">
+    <img src="../../../../assets/images/logo.png" alt="logo" />
+  </figure>
+  <span class="example-spacer" *ngIf="!(isSmallDevice$ | async)"></span>
+  <span>
+    <span [matMenuTriggerFor]="menu" class="profile-menu" >
+      <mat-icon>account_circle</mat-icon>
+      
+    </span>
+    <mat-menu #menu="matMenu">
+    	<span *ngFor="let theme of themes">
+          <button mat-menu-item (click)="changeTheme(theme, true)">{{theme}}</button>
+      </span>
+		</mat-menu>
+  </span>
+</mat-toolbar>
+<mat-sidenav-container [ngClass]="'sidenav-container'">
+  <mat-sidenav  #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="(isSmallDevice$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isSmallDevice$ | async) ? 'over' : 'side'"
+    [opened]="!(isSmallDevice$ | async)">
+
+    <mat-nav-list class="nav-list">
+      <a mat-list-item class="sidenav-list-item" routerLinkActive="active"  [routerLink]="['/dashboard']"><i class="material-icons">home</i> &nbsp;{{'MainNav.Home' | translate }}</a>
+      
+
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons">
+            dvr
+            </i> &nbsp;{{'MainNav.Entities' | translate }}
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="subnav">
+
+          <ng-container *ngFor="let entity of entityList">
+            <a  mat-list-item class="mat-sub-list-item" [class.active]="isActive(entity)" [routerLink]="[entity]">
+             {{entity}}
+            </a>
+          </ng-container>
+
+        </mat-nav-list>
+      </mat-expansion-panel>
+	 
+
+			<mat-expansion-panel class="expansion-panel" >
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons">
+            build
+          </i> &nbsp;{{'MainNav.Tools' | translate }}
+        </mat-expansion-panel-header>
+
+        <mat-nav-list class="subnav">
+          
+        </mat-nav-list>
+      </mat-expansion-panel>
+      
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header class="subnav-header">
+          <i class="material-icons">
+            account_box
+            </i> &nbsp;{{'MainNav.Administration' | translate }}
+        </mat-expansion-panel-header>
+
+      </mat-expansion-panel>
+			<a mat-list-item class="sidenav-list-item" routerLink="swagger-ui">
+        <i class="material-icons">
+          settings
+        </i> &nbsp;{{'MainNav.API' | translate }}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content #navContent class="fc-sidenav-content">
+
+    <!-- main content container start  -->
+    <router-outlet></router-outlet>
+    <!-- main content container Ends -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
